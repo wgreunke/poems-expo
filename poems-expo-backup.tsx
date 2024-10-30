@@ -1,136 +1,174 @@
-import { Image, StyleSheet, Platform, Text,View, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import * as FileSystem from 'expo-file-system';
-import Papa from 'papaparse'; 
-import {SelectItem} from '@ui-kitten/components'
+import { Asset } from 'expo-asset';
+import Papa from 'papaparse';
 import RNPickerSelect from 'react-native-picker-select';
 
-
-
-import React, {useEffect,useState} from 'react';
-
-
-
-const DisplayPoem = ({ poem_data, currentIndex }) => {
-//The lines of the poem are passed as a list of objects.  
-  return(
-    <View>
-      <Text>T1 line Firsts Line</Text>
-      <Text>B1 Line</Text>
-      <Text>{poem_data[currentIndex].column_name}</Text>
-    </View>
-  )
-}
-
-//Create the language selector
-//CHose this because it is simple to use
-//https://github.com/lawnstarter/react-native-picker-select
-//https://www.npmjs.com/package/react-native-picker-select
-
-export const LanguageChooser = ({ setChosenLanguage, setCurrentIndex }) => {
-  return (
-    <View>
+// Language selector component
+const LanguageChooser = ({ value, onValueChange }) => (
+  <View>
     <Text>Choose a language to learn</Text>
     <RNPickerSelect
-      value='Spanish'
-      onValueChange={(value) =>{
-        console.log(value)
-        setChosenLanguage(value)
-        setCurrentIndex(0)
-       }}
-      
+      value={value}
+      onValueChange={onValueChange}
       style={pickerSelectStyles}
       items={[
         { label: 'Spanish', value: 'Spanish' },
         { label: 'German', value: 'German' },
-
       ]}
     />
+  </View>
+);
+
+// Display individual poem component
+const DisplayPoem = ({ poemData }) => {
+  if (!poemData) {
+    return <Text>No poem data available</Text>;
+  }
+
+  return (
+    <View style={styles.poemContainer}>
+      <Text style={styles.poemLine}>{poemData.target_line1}</Text>
+      {/* Add other poem lines as needed */}
     </View>
   );
 };
 
-
-
+// Main component
 export default function HomeScreen() {
+  const [poemData, setPoemData] = useState([]);
+  const [chosenLanguage, setChosenLanguage] = useState('Spanish');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  // Load CSV data on component mount
+  useEffect(() => {
+    const loadCSV = async () => {
+      try {
+        setIsLoading(true);
+        
+        // Change the require statement to use a direct path
+        const csvModule = require('../../assets/poems_data.csv');
+        console.log('CSV Module:', csvModule);
+        
+        const asset = Asset.fromModule(csvModule);
+        console.log('Asset:', asset);
 
-//ChosenLanguage
-const [chosenLanguage, setChosenLanguage] = useState('Spanish');
+        await asset.downloadAsync();
+        console.log('Asset downloaded, URI:', asset.localUri);
+        
+        if (!asset.localUri) {
+          throw new Error('No local URI available for asset');
+        }
 
-const [currentIndex, setCurrentIndex] = useState(0);
+        const fileContent = await FileSystem.readAsStringAsync(asset.localUri);
+        console.log('File content length:', fileContent.length);
+        
+        const parsedData = Papa.parse(fileContent, { 
+          header: true,
+          skipEmptyLines: true 
+        });
 
-  //Dummy data for testing
-  const mockFilteredData = [
-  {
-    language: "Spanish",
-    column_name: "Some Spanish Text",
-    // Add other potential columns as needed
-  },
-  {
-    language: "German",
-    column_name: "German Text",
-  },
-  {
-    language:"German",
-    column_name: "Second line of German Text",
+        // Log parsing results
+        console.log('Parsed data rows:', parsedData.data.length);
+        if (parsedData.errors.length > 0) {
+          throw new Error('CSV parsing errors: ' + JSON.stringify(parsedData.errors));
+        }
+
+        setPoemData(parsedData.data);
+        setIsLoading(false);
+      } catch (err) {
+        console.error('Detailed error loading CSV:', {
+          error: err,
+          message: err.message,
+          stack: err.stack
+        });
+        setError(`Failed to load poems data: ${err.message}`);
+        setIsLoading(false);
+      }
+    };
+
+    loadCSV();
+  }, []);
+
+  // Filter poems based on selected language
+  const filteredPoems = poemData.filter(poem => poem.target === chosenLanguage);
+
+  // Handle language change
+  const handleLanguageChange = (value) => {
+    setChosenLanguage(value);
+  };
+
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading poems...</Text>
+      </View>
+    );
   }
-  // ... other filtered rows
-];
 
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
 
   return (
-    <>
-      <Text>{'\n'} </Text>
-      <Text>{'\n'} </Text>
-      <Text>{chosenLanguage}</Text>
-      <Text>{currentIndex}</Text>
-      
+    <View style={styles.container}>
       <Text style={styles.titleText}>Easy Poems</Text>
-      <LanguageChooser  setChosenLanguage={setChosenLanguage} setCurrentIndex={setCurrentIndex}  />
-      <Text>First line of poem</Text>
-      <Text style={styles.translatedText}>Translated line</Text>
+      
+      <LanguageChooser 
+        value={chosenLanguage}
+        onValueChange={handleLanguageChange}
+      />
 
-      <ScrollView>     
-        {
-        Array.from({length:3}).map((_, index)=>(
-          <DisplayPoem key={index}  poem_data={mockFilteredData} currentIndex={index}/>
-        )
-      )
-        
-        }
-    
-      </ScrollView>    
-    
-  </>);
+      <ScrollView style={styles.poemsList}>
+        {filteredPoems.length > 0 ? (
+          filteredPoems.map((poem, index) => (
+            <DisplayPoem 
+              key={index}
+              poemData={poem}
+            />
+          ))
+        ) : (
+          <Text>No poems available for {chosenLanguage}</Text>
+        )}
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  container: {
+    flex: 1,
+    padding: 16,
   },
   titleText: {
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 16,
   },
-  translatedText:{
-    color:'gray',
-  }
-
-}
-);
+  poemsList: {
+    flex: 1,
+  },
+  poemContainer: {
+    marginBottom: 16,
+    padding: 12,
+    borderRadius: 8,
+    backgroundColor: '#f5f5f5',
+  },
+  poemLine: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 16,
+  },
+});
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
@@ -141,21 +179,16 @@ const pickerSelectStyles = StyleSheet.create({
     borderColor: 'gray',
     borderRadius: 4,
     color: 'black',
-    paddingRight:   
- 30, // Adjust as needed
+    marginBottom: 16,
   },
   inputAndroid: {
     fontSize: 16,
     paddingHorizontal: 10,
     paddingVertical: 8,
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 8,
     color: 'black',
-    paddingRight:   
- 30, // Adjust as needed
+    marginBottom: 16,
   },
-
-
 });
-
