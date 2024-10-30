@@ -74,7 +74,6 @@ const DisplayPoem = ({ poem_data, currentIndex }) => {
         <Text>{poem_data[currentIndex].target_line4}</Text>
         {/* Show the base line in gray if the checkbox is checked, if not check it is white */}
         <Text style={{color: showBase ? 'gray' : 'white'}}>{poem_data[currentIndex].base_line4}</Text>
-        <Text>{poem_data[currentIndex].image_name}</Text>
         {/* Show the image if it exists */}
         
         <ToggleTranslation handleTranslation={handleTranslation} showBase={showBase}/>
@@ -105,9 +104,10 @@ const ToggleTranslation=({handleTranslation, showBase})=>{
         {
           flexDirection: 'row',
           alignItems: 'center',
+          justifyContent: 'center',
           gap: 10,
-          padding: 10,  // Add padding around the entire component
-          opacity: pressed ? 0.8 : 1,  // Optional: adds press feedback
+          padding: 10,
+          opacity: pressed ? 0.8 : 1,
         }
       ]}
     >
@@ -132,12 +132,16 @@ const [chosenLanguage, setChosenLanguage] = useState('Spanish');
 const [currentIndex, setCurrentIndex] = useState(0);
 const [filteredPoemData, setFilteredPoemData] = useState(poemData);
 
-
-
-//Filter the poem data based on the chosen language
+// Initial load - shuffle the data once
 useEffect(() => {
-  setFilteredPoemData(poemData.filter(poemData => poemData.target_language === chosenLanguage));
-}, [chosenLanguage]);
+  setPoemData(shuffleArray(customData));
+}, []); // Empty dependency array means this runs once on mount
+
+// Filter by language without shuffling
+useEffect(() => {
+  const filtered = poemData.filter(poemData => poemData.target_language === chosenLanguage);
+  setFilteredPoemData(filtered);
+}, [chosenLanguage, poemData]);
 
 
 return (
@@ -228,4 +232,15 @@ const pickerSelectStyles = StyleSheet.create({
 
 
 });
+
+// Add this shuffle function before the App component
+const shuffleArray = (array: any[]) => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
 
