@@ -1,10 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text, ScrollView, Pressable } from 'react-native';
+import {View, Text, ScrollView, Pressable, Image, Linking } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 const customData = require('../../assets/poems_data.json');
 import { StyleSheet } from 'react-native';
 import Checkbox from 'expo-checkbox';
 
+// First, at the top of your file (outside any component), create the image map:
+const imageMap = {
+  'backpack-socks-salt.jpg': require('../../assets/images/backpack-socks-salt.jpg'),
+  'beaver-sheep-question.jpg': require('../../assets/images/beaver-sheep-question.jpg'),
+  'bike-goose-cook.jpg': require('../../assets/images/bike-goose-cook.jpg'),
+  'boots-mustard-thick.jpg': require('../../assets/images/boots-mustard-thick.jpg'),
+  'building-purple-glass.jpg': require('../../assets/images/building-purple-glass.jpg'),
+  'busy-bat-clean.jpg': require('../../assets/images/busy-bat-clean.jpg'),
+  'cat-breakfast-pencil.jpg': require('../../assets/images/cat-breakfast-pencil.jpg'),
+  'coffee-wolf-thin.jpg': require('../../assets/images/coffee-wolf-thin.jpg'),
+  'gloves-rabbit-colorful.jpg': require('../../assets/images/gloves-rabbit-colorful.jpg'),
+  'goat-crocodile-scarf.jpg': require('../../assets/images/goat-crocodile-scarf.jpg'),
+  'hat-country-otter.jpg': require('../../assets/images/hat-country-otter.jpg'),
+  'house-kitchen-time.jpg': require('../../assets/images/house-kitchen-time.jpg'),
+  'month-man-sauce.jpg': require('../../assets/images/month-man-sauce.jpg'),
+  'sleep-silver-gold.jpg': require('../../assets/images/sleep-silver-gold.jpg'),
+  'study-sugar-light.jpg': require('../../assets/images/study-sugar-light.jpg'),
+  'swan-lake.jpg': require('../../assets/images/swan-lake.jpg'),
+};
 
 export const LanguageChooser = ({ setChosenLanguage, setCurrentIndex, chosenLanguage }) => {
   return (
@@ -43,8 +62,6 @@ const DisplayPoem = ({ poem_data, currentIndex }) => {
       <View>
         <Text>    </Text>
         <Text>*************************************</Text>
-        <Text>T1 line Firsts Line</Text>
-        <Text>B1 Line</Text>
         <Text>{poem_data[currentIndex].target_line1}</Text>
         {/* Show the base line in gray if the checkbox is checked, if not check it is white */}
         <Text style={{color: showBase ? 'gray' : 'white'}}>{poem_data[currentIndex].base_line1}</Text>
@@ -57,12 +74,22 @@ const DisplayPoem = ({ poem_data, currentIndex }) => {
         <Text>{poem_data[currentIndex].target_line4}</Text>
         {/* Show the base line in gray if the checkbox is checked, if not check it is white */}
         <Text style={{color: showBase ? 'gray' : 'white'}}>{poem_data[currentIndex].base_line4}</Text>
-
-        
-        
+        <Text>{poem_data[currentIndex].image_name}</Text>
+        {/* Show the image if it exists */}
         
         <ToggleTranslation handleTranslation={handleTranslation} showBase={showBase}/>
-         
+          
+          
+        <Image  
+            source={imageMap[poem_data[currentIndex].image_name]}
+            style={{
+              width: '100%',
+              height: 150,
+              resizeMode: 'contain',
+              alignSelf: 'center',
+              marginVertical: 10
+            }}
+          />
 
       </View>
     )
@@ -127,14 +154,20 @@ return (
   />
   <ScrollView>     
         {
-        Array.from({length:3}).map((_, index) => (
+        Array.from({length:5}).map((_, index) => (
           <React.Fragment key={index}>
             <DisplayPoem poem_data={filteredPoemData} currentIndex={index}/>
           </React.Fragment>
         ))        
         }
     
-      </ScrollView>    
+        <View style={{ marginBottom: 200 }}>
+          <Pressable onPress={() => Linking.openURL('https://www.linkedin.com/in/wgreunke/')}>
+            <Text style={{ color: '#0077B5', textDecorationLine: 'underline' }}>Created by: Ward Greunke</Text>
+          </Pressable>
+        </View>
+    </ScrollView>    
+
 
   </View>
 );
@@ -195,3 +228,4 @@ const pickerSelectStyles = StyleSheet.create({
 
 
 });
+
