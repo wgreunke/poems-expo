@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import {View, Text, ScrollView, Pressable, Image, Linking } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 const customData = require('../../assets/poems_data.json');
+//const customData= require('./assets/poems_data.json');
 import { StyleSheet } from 'react-native';
+//import { readString } from 'react-native-csv';
 import Checkbox from 'expo-checkbox';
 
 // First, at the top of your file (outside any component), create the image map:
@@ -24,6 +26,8 @@ const imageMap = {
   'study-sugar-light.jpg': require('../../assets/images/study-sugar-light.jpg'),
   'swan-lake.jpg': require('../../assets/images/swan-lake.jpg'),
 };
+
+
 
 export const LanguageChooser = ({ setChosenLanguage, setCurrentIndex, chosenLanguage }) => {
   return (
@@ -57,42 +61,42 @@ const DisplayPoem = ({ poem_data, currentIndex }) => {
     setShowBase(!showBase);
   }
   
-  //The lines of the poem are passed as a list of objects.  
-    return(
-      <View>
-        <Text>    </Text>
-        <Text>*************************************</Text>
-        <Text>{poem_data[currentIndex].target_line1}</Text>
-        {/* Show the base line in gray if the checkbox is checked, if not check it is white */}
-        <Text style={{color: showBase ? 'gray' : 'white'}}>{poem_data[currentIndex].base_line1}</Text>
-        <Text>{poem_data[currentIndex].target_line2}</Text>
-        {/* Show the base line in gray if the checkbox is checked, if not check it is white */}
-        <Text style={{color: showBase ? 'gray' : 'white'}}>{poem_data[currentIndex].base_line2}</Text>
-        <Text>{poem_data[currentIndex].target_line3}</Text>
-        {/* Show the base line in gray if the checkbox is checked, if not check it is white */}
-        <Text style={{color: showBase ? 'gray' : 'white'}}>{poem_data[currentIndex].base_line3}</Text>
-        <Text>{poem_data[currentIndex].target_line4}</Text>
-        {/* Show the base line in gray if the checkbox is checked, if not check it is white */}
-        <Text style={{color: showBase ? 'gray' : 'white'}}>{poem_data[currentIndex].base_line4}</Text>
-        {/* Show the image if it exists */}
-        
-        <ToggleTranslation handleTranslation={handleTranslation} showBase={showBase}/>
-          
-          
-        <Image  
-            source={imageMap[poem_data[currentIndex].image_name]}
-            style={{
-              width: '100%',
-              height: 150,
-              resizeMode: 'contain',
-              alignSelf: 'center',
-              marginVertical: 10
-            }}
-          />
-
-      </View>
-    )
+  // Check if currentIndex is within bounds
+  if (currentIndex < 0 || currentIndex >= poem_data.length) {
+    return <Text>No poem available</Text>; // Display a message if out of bounds
   }
+
+  return(
+    <View>
+      <Text>{local_poem_data.target_line1}</Text>
+      <Text>*************************************</Text>
+      <Text>{poem_data[currentIndex].target_line1}</Text>
+      {/* Show the base line in gray if the checkbox is checked, if not check it is white */}
+      <Text style={{color: showBase ? 'gray' : '#f5f5f5'}}>{poem_data[currentIndex].base_line1}</Text>
+      <Text>{poem_data[currentIndex].target_line2}</Text>
+      {/* Show the base line in gray if the checkbox is checked, if not check it is white */}
+      <Text style={{color: showBase ? 'gray' : '#f5f5f5'}}>{poem_data[currentIndex].base_line2}</Text>
+      <Text>{poem_data[currentIndex].target_line3}</Text>
+      {/* Show the base line in gray if the checkbox is checked, if not check it is white */}
+      <Text style={{color: showBase ? 'gray' : '#f5f5f5'}}>{poem_data[currentIndex].base_line3}</Text>
+      <Text>{poem_data[currentIndex].target_line4}</Text>
+      {/* Show the base line in gray if the checkbox is checked, if not check it is white */}
+      <Text style={{color: showBase ? 'gray' : '#f5f5f5'}}>{poem_data[currentIndex].base_line4}</Text>
+      {/* Show the image if it exists */}
+      <ToggleTranslation handleTranslation={handleTranslation} showBase={showBase}/>
+      <Image  
+          source={imageMap[poem_data[currentIndex].image_name]}
+          style={{
+            width: '100%',
+            height: 150,
+            resizeMode: 'contain',
+            alignSelf: 'center',
+            marginVertical: 10
+          }}
+        />
+    </View>
+  )
+}
 
 
 //Create a checkbox that says "Show translation"
@@ -132,6 +136,7 @@ const [chosenLanguage, setChosenLanguage] = useState('Spanish');
 const [currentIndex, setCurrentIndex] = useState(0);
 const [filteredPoemData, setFilteredPoemData] = useState(poemData);
 
+
 // Initial load - shuffle the data once
 useEffect(() => {
   setPoemData(shuffleArray(customData));
@@ -145,18 +150,13 @@ useEffect(() => {
 
 
 return (
-  <View>
-  <Text>
-    This should be the json file
-    {poemData[0].target_line1}
-
-  </Text>
-  <LanguageChooser 
+  <View style={{ backgroundColor: '#f5f5f5', height: '100vh' }}>
+    <LanguageChooser 
     setChosenLanguage={setChosenLanguage} 
     setCurrentIndex={setCurrentIndex}
     chosenLanguage={chosenLanguage}
   />
-  <ScrollView>     
+  <ScrollView style={{ backgroundColor: '#f5f5f5', flex: 1 }}>
         {
         Array.from({length:5}).map((_, index) => (
           <React.Fragment key={index}>
@@ -179,6 +179,9 @@ return (
 
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#f5f5f5',
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -226,8 +229,7 @@ const pickerSelectStyles = StyleSheet.create({
     borderColor: 'gray',
     borderRadius: 8,
     color: 'black',
-    paddingRight:   
- 30, // Adjust as needed
+    paddingRight:30, // Adjust as needed
   },
 
 
@@ -243,4 +245,17 @@ const shuffleArray = (array: any[]) => {
   return shuffled;
 };
 
-
+const local_poem_data= {
+  "key_words": "gloves rabbit colorful",
+  "target_line1": "Der Handschuh liegt im bunten Schein,",
+  "target_line2": "Ein Hase h\u00fcpft im Farbenspiel hinein,",
+  "target_line3": "Der Regenbogen strahlt so bunt und fein,",
+  "target_line4": "Die Welt ist voller Wunder, gro\u00df und klein.",
+  "base_line1": "The glove lies in the colorful shine,",
+  "base_line2": "A rabbit hops into the play of colors,",
+  "base_line3": "The rainbow glows so vibrant and fine,",
+  "base_line4": "The world is full of wonders, big and small.",
+  "target_language": "German",
+  "base": "English",
+  "image_name": "gloves-rabbit-colorful.jpg"
+}
