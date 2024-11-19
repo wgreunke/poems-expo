@@ -31,11 +31,6 @@ const imageMap = {
 
 
 
-
-
-
-
-
 const DisplayPoem = ({ poem_data, currentIndex }) => {
  
   const [showBase, setShowBase] = useState(false);
@@ -52,7 +47,7 @@ const DisplayPoem = ({ poem_data, currentIndex }) => {
   return(
     <View>
       
-      <View style={{ height: 2, backgroundColor: '#007AFF', marginVertical: 10 }} />
+      <View style={{ height: 2, backgroundColor: '#007AFF', marginVertical: 10, marginHorizontal: 10, width: 'calc(100% - 20px)' }} />
       <Text>{poem_data[currentIndex].target_line1}</Text>
       {/* Show the base line in gray if the checkbox is checked, if not check it is white */}
       <Text style={{color: showBase ? 'gray' : '#f5f5f5'}}>{poem_data[currentIndex].base_line1}</Text>

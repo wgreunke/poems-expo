@@ -8,12 +8,15 @@ export default function About() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Share a Poem</Text>
+            <Text style={styles.title}>We want to hear from you!</Text>
             <Text style={styles.paragraph}>
             How can we make VerseHint better for you?
             </Text>
             <Text style={styles.paragraph}>
-               Please send your feedback to versehint@gmail.com.
+                Please send your feedback to{' '}
+                <Pressable onPress={handleEmailPress}>
+                    <Text style={styles.link}>versehint@gmail.com</Text>
+                </Pressable>.
             </Text>
             <Pressable onPress={handleEmailPress} style={styles.button}>
                 <Text style={styles.buttonText}>Email Feedback</Text>
@@ -49,6 +52,10 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: '600',
+    },
+    link: {
+        color: '#007AFF',
+        textDecorationLine: 'underline',
     },
 });
 

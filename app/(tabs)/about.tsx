@@ -9,7 +9,7 @@ export default function About() {
 
 
                 <Text style={styles.paragraph}>
-                VerseHint helps you overcome the intermediate plateau with simple poems that use easy vocabulary and literal translations allowing you to quickly learn new words without having to look them up.
+                Verse Hint helps you overcome the intermediate plateau with simple poems that use easy vocabulary and literal translations allowing you to quickly learn new words without having to look them up.
                 </Text>
 
                 <Text style={styles.paragraph}>

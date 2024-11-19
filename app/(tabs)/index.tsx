@@ -4,23 +4,11 @@ import { StyleSheet, View, Text, Pressable, Image } from 'react-native';
 export default function HomePage() {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
         <Text style={styles.title}>Verse Hint</Text>
-        <Text style={styles.subtitle}>Easy Spanish, French and German poems with instant translations.</Text>
-        <Text style={styles.tagline}>Practice reading without looking up words.?</Text>
-        <Image source={require('../../assets/images/poem_image.png')} style={styles.image} />
-      </View>
-
-
-
-
-      <View style={styles.content}>
-        <Text style={styles.description}>
-          Just click "Show English" to get a literal translation for each word.
-        </Text>
-      </View>
-
-      <View style={styles.buttonContainer}>
+        <Text style={styles.subtitle}>Easy Spanish and German poems with instant translations.</Text>
+        <Text style={styles.tagline}>Practice reading without looking up words!</Text>
+        
+        <View style={styles.buttonContainer}>
         <Link href="/poems?language=Spanish" asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>Read Spanish Poems</Text>
@@ -28,8 +16,6 @@ export default function HomePage() {
         </Link>        
       </View>
       
-
-
       <View style={styles.buttonContainer}>
         <Link href="/poems?language=German" asChild>
           <Pressable style={styles.button}>
@@ -37,6 +23,17 @@ export default function HomePage() {
           </Pressable>
         </Link>        
       </View>
+
+
+      <View style={styles.content}>
+        <Text style={styles.description}>
+          Click "Show English" to get a literal translation.
+        </Text>
+      </View>
+
+
+
+
 
     </View>
   );
@@ -77,7 +74,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: '600',
   },
   tagline: {
