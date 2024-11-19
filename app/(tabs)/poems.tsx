@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import {View, Text, ScrollView, Pressable, Image, Linking } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
 import { Picker } from '@react-native-picker/picker';
 const customData = require('../../assets/poems_data.json');
+import { useLocalSearchParams } from 'expo-router';
 
 import { StyleSheet } from 'react-native';
 //import { readString } from 'react-native-csv';
@@ -29,25 +31,9 @@ const imageMap = {
 
 
 
-export const LanguageChooser = ({ setChosenLanguage, setCurrentIndex, chosenLanguage }) => {
-  return (
-    <View style={{ marginBottom: 20 }}>
-      <Text>Choose a language to learn</Text>
-      <Picker
-        selectedValue={chosenLanguage}
-        onValueChange={(value) => {
-          console.log(value);
-          setChosenLanguage(value);
-          setCurrentIndex(0);
-        }}
-        style={{ height: 50, width: 150 }}
-      >
-        <Picker.Item label="Spanish" value="Spanish" />
-        <Picker.Item label="German" value="German" />
-      </Picker>
-    </View>
-  );
-};
+
+
+
 
 
 const DisplayPoem = ({ poem_data, currentIndex }) => {
@@ -129,17 +115,26 @@ const ToggleTranslation=({handleTranslation, showBase})=>{
 export default function App() {
 
 const [poemData, setPoemData] = useState(customData);
-//const [poemData, setPoemData] = useState(local_poem_data);
 const [chosenLanguage, setChosenLanguage] = useState('Spanish');
 const [currentIndex, setCurrentIndex] = useState(0);
 const [filteredPoemData, setFilteredPoemData] = useState(poemData);
 
+//const params = useSearchParams(); // Use the hook to get search parameters
+//const language = params.language; // Access the language parameter
+const { language } = useLocalSearchParams();
 
 // Initial load - shuffle the data once
 useEffect(() => {
   setPoemData(shuffleArray(customData));
   //setPoemData(local_poem_data);
 }, []); // Empty dependency array means this runs once on mount
+
+//Grab the language from the search params
+useEffect(() => {
+  if (language) 
+    {setChosenLanguage(language);
+    }
+}, [language]);
 
 // Filter by language without shuffling
 useEffect(() => {
@@ -151,12 +146,7 @@ useEffect(() => {
 return (
   <View style={{ backgroundColor: '#f5f5f5', height: '100%', paddingLeft: 10, paddingTop: 10 }}>
     <ScrollView style={{ backgroundColor: '#f5f5f5' }}>
-      <LanguageChooser 
-        setChosenLanguage={setChosenLanguage} 
-        setCurrentIndex={setCurrentIndex}
-        chosenLanguage={chosenLanguage}
-      />
-
+      
       {filteredPoemData.map((_, index) => (
         <View key={index}>
           <DisplayPoem poem_data={filteredPoemData} currentIndex={index} />

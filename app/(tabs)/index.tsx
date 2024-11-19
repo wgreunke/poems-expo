@@ -21,14 +21,23 @@ export default function HomePage() {
       </View>
 
       <View style={styles.buttonContainer}>
-        <Link href="/poems" asChild>
+        <Link href="/poems?language=Spanish" asChild>
           <Pressable style={styles.button}>
-            <Text style={styles.buttonText}>Start Reading Poems</Text>
+            <Text style={styles.buttonText}>Read Spanish Poems</Text>
           </Pressable>
-        </Link>
-
-        
+        </Link>        
       </View>
+      
+
+
+      <View style={styles.buttonContainer}>
+        <Link href="/poems?language=German" asChild>
+          <Pressable style={styles.button}>
+            <Text style={styles.buttonText}>Read German Poems</Text>
+          </Pressable>
+        </Link>        
+      </View>
+
     </View>
   );
 }
@@ -57,6 +66,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     gap: 15,
+    marginTop: 10,
+    marginBottom: 10,
   },
   button: {
     backgroundColor: '#007AFF',
