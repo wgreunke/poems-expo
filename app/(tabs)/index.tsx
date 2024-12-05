@@ -5,7 +5,7 @@ export default function HomePage() {
   return (
     <View style={styles.container}>
         <Text style={styles.title}>Verse Hint</Text>
-        <Text style={styles.subtitle}>Easy Spanish and German poems with instant translations.</Text>
+        <Text style={styles.subtitle}>Easy Spanish poems with instant translations.</Text>
         <Text style={styles.tagline}>Practice reading without looking up words!</Text>
         
         <View style={styles.buttonContainer}>
@@ -16,13 +16,7 @@ export default function HomePage() {
         </Link>        
       </View>
       
-      <View style={styles.buttonContainer}>
-        <Link href="/poems?language=German" asChild>
-          <Pressable style={styles.button}>
-            <Text style={styles.buttonText}>Read German Poems</Text>
-          </Pressable>
-        </Link>        
-      </View>
+
 
 
       <View style={styles.content}>
