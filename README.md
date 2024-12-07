@@ -18,9 +18,12 @@ Verse Hint keeps you motivated with its interactive reading experience.  With a 
 Break free from the monotony of traditional language learning methods. With Verse Hint, you’ll enjoy meaningful content that bridges the gap between beginner and fluent reading.
 
 ---
+Without translation.
 <img src="poems.jpg" width="200">
-
-![VerseHint App Screenshot](poems.jpg "VerseHint App")
+<br/>
+<br/>
+With instant translation.
+<img src="poems.jpg" width="200">
 
 ---
 
