@@ -17,11 +17,6 @@ Verse Hint keeps you motivated with its interactive reading experience.  With a 
 ### Overcome the Intermediate Plateau
 Break free from the monotony of traditional language learning methods. With Verse Hint, you’ll enjoy meaningful content that bridges the gap between beginner and fluent reading.
 
----
-Without translation. <br/>
-<br/>
-<br/>
-<img src="poems.jpg" width="200">
 
 | Without Translation      | With Instant Translation |
 | ----------- | ----------- |
@@ -32,7 +27,7 @@ Without translation. <br/>
 ---
 
 ## Get in Touch
-Have questions or feedback? We’d love to hear from you! Visit our [Contact Page](#) to connect with us.
+Have questions or feedback? We’d love to hear from you! Visit our [Contact Page](https://forms.gle/5XrmBxbyZ7f1HqvM9) to connect with us.
 
 ---
 
