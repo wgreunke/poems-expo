@@ -1,10 +1,8 @@
-This is the readme for Verse Hint
-
-
 
 # Welcome to VerseHint
 
-Discover the joy of language learning through poetry with VerseHint, the app that turns rhyming verses into an engaging way to build your language skills.
+The best way to practice learning Spanish using poetry and instant translation. 
+Discover the joy of language learning through poetry with Verse Hint, the app that turns rhyming verses into an engaging way to build your language skills.
 
 ---
 
@@ -14,10 +12,10 @@ Discover the joy of language learning through poetry with VerseHint, the app tha
 Poetry isn’t just beautiful—it’s memorable. Rhyming poems help reinforce vocabulary and pronunciation in ways that stick.
 
 ### Make Reading Fun
-VerseHint keeps you motivated with its interactive reading experience. Tap lines to reveal translations and uncover the meaning behind every word.
+Verse Hint keeps you motivated with its interactive reading experience.  With a single click, you can see a literal translation that helps you learn new vocabulary and quickly get back to reading.
 
 ### Overcome the Intermediate Plateau
-Break free from the monotony of traditional language learning methods. With VerseHint, you’ll enjoy meaningful content that bridges the gap between beginner and fluent reading.
+Break free from the monotony of traditional language learning methods. With Verse Hint, you’ll enjoy meaningful content that bridges the gap between beginner and fluent reading.
 
 ---
 
