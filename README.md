@@ -23,9 +23,9 @@ Without translation. <br/>
 <br/>
 <img src="poems.jpg" width="200">
 
-| Without Translation      | With Translation |
+| Without Translation      | With Instant Translation |
 | ----------- | ----------- |
-| <img src="poems.jpg" width="200">| With instant translation.<br/>|
+| <img src="poems.jpg" width="200">|<img src="english_words.jpg" width="200"> |
 
 
 
