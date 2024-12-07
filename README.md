@@ -19,7 +19,7 @@ Break free from the monotony of traditional language learning methods. With Vers
 
 ---
 
-![VerseHint App Screenshot](path/to/your/screenshot.png "VerseHint App")
+![VerseHint App Screenshot](poems.jpg "VerseHint App")
 
 ---
 
