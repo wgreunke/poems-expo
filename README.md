@@ -31,5 +31,7 @@ Have questions or feedback? We’d love to hear from you! Visit our [Contact Pag
 
 ---
 
-Experience the power of VerseHint and transform your language learning journey today!
+Experience the power of VerseHint and transform your language-learning journey today!
 
+## Privacy Policy
+[Privacy](privacy.md)
