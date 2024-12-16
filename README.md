@@ -6,8 +6,8 @@ Discover the joy of language learning through poetry with Verse Hint, the app th
 
 ---
 
-Get the App [Get the App](https://apps.apple.com/us/app/spanish-poems/id6739074042 )
-<img src="poems.jpg" width="200">|<img src="english_words.jpg" width="200"> 
+[Get the App on the Apple App Store](https://apps.apple.com/us/app/spanish-poems/id6739074042 )  
+<img src="logo.webp" width="100"> 
 
 ## Why VerseHint?
 
